@@ -1,3 +1,6 @@
+@import "./components/Header/header.scss";
+@import "./components/Forms/register.scss";
+
 body {
   margin: 0;
   padding: 0;
