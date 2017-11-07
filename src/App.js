@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import pushData from './server';
 
 class App extends Component {

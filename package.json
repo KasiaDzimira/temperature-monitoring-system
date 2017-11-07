@@ -40,12 +40,18 @@
     "webpack-dev-server": "2.8.2",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3",
-    "firebase": "^4.6.0"
+    "firebase": "^4.6.0",
+    "react-browser-router": "^2.0.3",
+    "react-router-dom": "^4.2.2",
+    "node-sass": "^4.6.0",
+    "react-scripts": "^1.0.17"
   },
   "scripts": {
     "start": "node scripts/start.js",
+    "start:dev": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "jest": {
     "collectCoverageFrom": [
