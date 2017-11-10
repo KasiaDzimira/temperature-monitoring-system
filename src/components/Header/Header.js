@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import './header.scss'
+import './header.css';
 
 class Header extends Component {
     render() {
         return (
             <div className={'top-menu'}>
-                <div className={'left-menu'}> </div>
-                <div className={'right-menu'}>
-                    <div className={'home'}>Home</div>
-                    <div className={'about'}>About</div>
-                    <div className={'contact'}>Contact</div>
+                <div className={'menu'}>
+                    <div className={'home'}><a href={'#'}>Home</a></div>
+                    <div className={'about'}><a href={'#'}>About</a></div>
+                    <div className={'contact'}><a href={'#'}>Contact</a></div>
+                    <div className={'regulation'}><a href={'#'}>Regulation</a></div>
                 </div>
             </div>
         )

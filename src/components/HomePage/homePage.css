@@ -1,0 +1,52 @@
+.login-user {
+    margin: 0 auto;
+    width: 320px;
+}
+
+.login-user input {
+    width: 300px;
+    height: 50px;
+    margin: 20px 0;
+}
+
+.login-user button {
+    margin-bottom: 15px;
+    width: 250px;
+    height: 50px;
+}
+
+.login-user .login-button {
+    background-color: #f96d00;
+    color: #f2f2f2;
+}
+
+.login-user .register-button {
+    background-color: #393e46;
+    color: #f2f2f2;
+}
+
+.login-user__form {
+    text-align: center;
+}
+
+.login-user-text {
+    font-size: 25px;
+    font-weight: bold;
+    color: #f96d00;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.register-user {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.register-user span {
+    width: 100%;
+}
+
+.register-user .register-button {
+    display: block;
+}

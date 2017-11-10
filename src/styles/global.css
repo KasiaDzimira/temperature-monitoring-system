@@ -9,26 +9,31 @@ html, body, div {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-body {
-  overflow-x: auto;
-  overflow-y: scroll;
+html {
+  overflow: hidden;
 }
 
-#site-background {
-  position: absolute;
-  top: 0;
-  width: 1848px;
-  background-size: auto auto;
-  background-repeat: no-repeat;
-  background-image: url("../../assets/backgroundImage.jpg");
-  z-index: -1;
+body {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 #site-container {
   display: block;
+  top: 0;
+  width: 1848px;
+  background-size: auto auto;
+  background-color: #f2f2f2;
+  z-index: -1;
+  margin-top: 20px;
 }
 
 #app {
   width: 980px;
   margin: 0 auto;
+}
+
+.app-container {
+  display: flex;
+  align-items: center;
 }

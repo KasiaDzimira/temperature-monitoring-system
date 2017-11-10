@@ -1,0 +1,37 @@
+#header {
+    height: 130px;
+    background-color: #222831;
+    box-shadow: 10px 10px 5px #222831;
+}
+
+#header .top-menu {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.top-menu .menu {
+    width: 100%;
+    float: right;
+}
+
+.top-menu .menu > div {
+    width: calc(100% / 4);
+    float: left;
+    display: flex;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.top-menu .menu div a {
+    color: #f96d00;
+    text-decoration: none;
+    margin: 0 auto;
+}
+
+.top-menu .menu div a:hover {
+    font-size: 38px;
+    border: 1px solid #f96d00;
+    text-shadow: 0 0 2px #fff1c5;
+    padding: 5px;
+}
