@@ -14,7 +14,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
-// It requires a trailing slash, or the file assets will get an incorrect path.
+// It requires a trailing slash, or the file reducers will get an incorrect path.
 const publicPath = paths.servedPath;
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
@@ -134,7 +134,7 @@ module.exports = {
         // back to the "file" loader at the end of the loader list.
         oneOf: [
           // "url" loader works just like "file" loader but it also embeds
-          // assets smaller than specified size as data URLs to avoid requests.
+          // reducers smaller than specified size as data URLs to avoid requests.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             loader: require.resolve('url-loader'),
@@ -160,7 +160,7 @@ module.exports = {
           },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
-          // "css" loader resolves paths in CSS and adds assets as dependencies.
+          // "css" loader resolves paths in CSS and adds reducers as dependencies.
           // "style" loader normally turns CSS into JS modules injecting <style>,
           // but unlike in development configuration, we do something different.
           // `ExtractTextPlugin` first applies the "postcss" and "css" loaders
@@ -217,7 +217,7 @@ module.exports = {
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
-          // "file" loader makes sure assets end up in the `build` folder.
+          // "file" loader makes sure reducers end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
@@ -299,7 +299,7 @@ module.exports = {
       fileName: 'asset-manifest.json',
     }),
     // Generate a service worker script that will precache, and keep up to date,
-    // the HTML & assets that are part of the Webpack build.
+    // the HTML & reducers that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({
       // By default, a cache-busting query parameter is appended to requests
       // used to populate the caches, to ensure the responses are fresh.

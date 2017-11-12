@@ -1,19 +1,22 @@
 .register-user {
-  display: flex;
-  margin: 0 auto;
-}
-
-.register-user input {
-    float: left;
-    width: 100%;
-}
-
-.register-user button {
+    display: inline-block;
     margin: 0 auto;
-    display: flex;
+    width: 980px;
 }
 
-.register-user__form {
-  margin: 20px auto;
-  width: 250px;
+.register-user .btn__create-account {
+    background-color: #f96d00;
+}
+
+.register-user .register-user__form {
+    margin: 20px auto;
+    width: 320px;
+}
+
+.register-user .register-user__text {
+    font-size: 25px;
+    font-weight: bold;
+    color: #f96d00;
+    text-align: center;
+    margin-bottom: 30px;
 }

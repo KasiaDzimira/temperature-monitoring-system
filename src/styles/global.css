@@ -28,12 +28,13 @@ body {
   margin-top: 20px;
 }
 
-#app {
+.app {
   width: 980px;
   margin: 0 auto;
 }
 
-.app-container {
+main {
   display: flex;
   align-items: center;
+  height: 100%;
 }

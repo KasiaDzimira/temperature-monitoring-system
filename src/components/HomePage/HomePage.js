@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import './homePage.css'
+import { Link } from 'react-router-dom';
+
+import Login from '../Forms/Login'
+import './homePage.css';
 
 class HomePage extends Component {
     constructor() {
@@ -15,18 +18,16 @@ class HomePage extends Component {
 
     render() {
         return (
-            <section className={'login-user'}>
-                <div className={'login-user-text'}>
+            <section className={'home-page'}>
+                <div className={'login-user__text'}>
                     <span>Log in to your user panel:</span>
                 </div>
-                <form className={'login-user__form'} onSubmit={this.handleSubmit}>
-                    <input type={'text'} name={'login'} placeholder={'Username'} onChange={ this.handleChange } value={ this.state.login } />
-                    <input type={'password'} name={'password'} placeholder={'Password'} onChange={ this.handleChange } value={ this.state.password } />
-                    <button className={'login-button'}>Log in</button>
-                </form>
+                <Login />
                 <div className={'register-user'}>
                     <span>or create your account</span>
-                    <button className={'register-button'}>Sign out</button>
+                    <Link to={'/register'}>
+                        <button className={'register-button'}>Sign up</button>
+                    </Link>
                 </div>
             </section>
         )

@@ -6,8 +6,17 @@ const firebase = require('firebase');
 
 firebase.initializeApp(config);
 
-export default function pushData(ref, item) {
-    const itemsRef = firebase.database().ref(ref);
+    export function pushData(ref, item) {
+        const itemsRef = firebase.database().ref(ref);
 
-    itemsRef.push(item);
-}
+        itemsRef.child(item.id).set(item);
+    }
+
+    export function fetchData(objectName) {
+        const itemsRef = firebase.database().ref().child(objectName);
+        itemsRef.on('value', snapshot => { dataFetcher.fetch(objectName, snapshot) });
+    }
+
+    export function getFetcher(name) {
+        return dataFetcher.getFetcherByName(name);
+    }

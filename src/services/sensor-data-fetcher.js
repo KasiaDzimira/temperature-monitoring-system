@@ -1,14 +1,10 @@
-var fetch = require('node-fetch');
-
 class SensorDataFetcher {
-    fetch(sensor) {
-        return fetch(sensor.id)
-            .then((response) => response.text())
-            .then((body) => this.transform(JSON.parse(body)));
+    fetch(object) {
+        return this.transform(object);
     }
 
     supports(object) {
-        return ('sensor' == object.modelName);
+        return ('sensors' === object);
     }
 
     transform(response) {

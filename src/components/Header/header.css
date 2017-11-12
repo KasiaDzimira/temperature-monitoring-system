@@ -1,10 +1,10 @@
-#header {
+.header {
     height: 130px;
     background-color: #222831;
     box-shadow: 10px 10px 5px #222831;
 }
 
-#header .top-menu {
+.header .top-menu {
     width: 980px;
     margin: 0 auto;
 }

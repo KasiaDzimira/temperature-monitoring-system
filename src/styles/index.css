@@ -1,3 +1,5 @@
 @import "global.css";
 @import "../components/Header/header.css";
 @import "../components/Forms/register.css";
+@import "../components/Buttons/buttons.css";
+@import "../components/Inputs/inputs.css";
