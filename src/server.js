@@ -1,3 +1,5 @@
+import React from 'react'
+
 const config = require('./config/firebase.config');
 const DataFetcher = require('./services/data-fetcher');
 
@@ -6,10 +8,12 @@ const firebase = require('firebase');
 
 firebase.initializeApp(config);
 
+const auth = firebase.auth();
+
     export function pushData(ref, item) {
         const itemsRef = firebase.database().ref(ref);
 
-        itemsRef.child(item.id).set(item);
+        itemsRef.push(item);
     }
 
     export function fetchData(objectName) {
@@ -19,4 +23,44 @@ firebase.initializeApp(config);
 
     export function getFetcher(name) {
         return dataFetcher.getFetcherByName(name);
+    }
+
+    export function createUser(user) {
+        const promise = auth.createUserWithEmailAndPassword(user.email, user.password);
+
+        promise
+            .catch(e => console.log(e.message))
+            .then(pushUserData(user));
+    }
+
+    export function logIn(email, password) {
+        const promise = auth.signInWithEmailAndPassword(email, password);
+
+        promise.catch(e => console.log(e.message));
+
+        auth.onAuthStateChanged(firebaseUser => {
+            if (firebaseUser) {
+                window.localStorage.setItem('loggedUser', firebaseUser.email);
+                window.location = '/profile';
+            }
+
+            console.log('Not logged in');
+        })
+    }
+
+    export function logOut() {
+        auth.signOut();
+
+        window.location = '/';
+    }
+
+    function pushUserData(user) {
+        let data = {
+            email: user.email,
+            password: user.password,
+            role: user.userRole
+        };
+
+        pushData('users', data);
+        console.log('User has been created');
     }

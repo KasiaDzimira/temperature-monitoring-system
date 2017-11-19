@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import * as Server from '../../server';
+import React, { Component } from 'react'
+import * as Server from '../../server'
 
 class Register extends Component {
     constructor() {
         super();
 
         this.state = {
-            login: '',
+            email: '',
             password: '',
             repeatedPassword: '',
             userRole: 'ROLE_USER'
@@ -24,7 +24,7 @@ class Register extends Component {
                 </div>
                 <div className={'register-form'}>
                     <form className={'register-user__form'} onSubmit={this.handleSubmit}>
-                        <input type={'text'} name={'login'} placeholder={'Username'} onChange={ this.handleChange } value={ this.state.login } />
+                        <input type={'text'} name={'email'} placeholder={'Email'} onChange={ this.handleChange } value={ this.state.email } />
                         <input type={'password'} name={'password'} placeholder={'Password'} onChange={ this.handleChange } value={ this.state.password } />
                         <input type={'password'} name={'repeatedPassword'} placeholder={'Repeat password'} onChange={ this.handleChange } value={ this.state.repeatedPassword } />
                         <button className={'btn__create-account'}>Create account</button>
@@ -44,20 +44,31 @@ class Register extends Component {
         e.preventDefault();
 
         const user = {
-            id: this.state.login, //This value is custom id for  Firebase. Login is unique value for users
-            login: this.state.login,
+            email: this.state.email,
             password: this.state.password,
             repeatedPassword: this.state.repeatedPassword,
             userRole: this.state.userRole
         };
 
-        Server.pushData('users', user);
+        if (this.isValidPassword(user)) {
+            Server.createUser(user);
+        }
 
         this.setState({
-            login: '',
+            email: '',
             password: '',
             repeatedPassword: ''
         });
+    }
+
+    isValidPassword(user) {
+        if (user.password === user.repeatedPassword) {
+            return true;
+        }
+
+        console.log('Passwords must be this same');
+
+        return false;
     }
 }
 

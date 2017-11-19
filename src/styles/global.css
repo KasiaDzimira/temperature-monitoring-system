@@ -18,6 +18,11 @@ body {
   overflow-y: hidden;
 }
 
+section {
+  width: 980px;
+  margin: 0 auto;
+}
+
 #site-container {
   display: block;
   top: 0;
