@@ -6,7 +6,7 @@ class Login extends Component {
         super();
 
         this.state = {
-            login: '',
+            email: '',
             password: ''
         };
 
@@ -17,7 +17,7 @@ class Login extends Component {
     render() {
         return (
             <form className={'login-user__form'} onSubmit={this.handleSubmit}>
-                <input type={'text'} name={'login'} placeholder={'Username'} onChange={ this.handleChange } value={ this.state.login } />
+                <input type={'text'} name={'email'} placeholder={'Email'} onChange={ this.handleChange } value={ this.state.email } />
                 <input type={'password'} name={'password'} placeholder={'Password'} onChange={ this.handleChange } value={ this.state.password } />
                 <button className={'login-button'}>Log in</button>
             </form>
@@ -33,22 +33,34 @@ class Login extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        let ref = 'users';
         const formData = {
-            login: this.state.login,
+            email: this.state.email,
             password: this.state.password
         };
+        //
+        // let ref = 'users';
+        // this.checkIfIsAdmin(ref, formData.email);
 
-        Server.fetchData(ref);
-        var userFetcher = Server.getFetcher(ref);
-        var user = userFetcher.findByUsername(formData.login);
+        Server.logIn(formData.email, formData.password);
 
-        console.log(user);
         this.setState({
-            login: '',
+            email: '',
             password: ''
         });
     }
+
+    // checkIfIsAdmin(ref, email) {
+    //     Server.fetchData(ref);
+    //
+    //     var userFetcher = Server.getFetcher(ref);
+    //     var user = userFetcher.findByUsername(email);
+    //
+    //     if (user) {
+    //         console.log('is admin');
+    //     } else {
+    //         console.log('isn\'t admin');
+    //     }
+    // }
 }
 
 export default Login;

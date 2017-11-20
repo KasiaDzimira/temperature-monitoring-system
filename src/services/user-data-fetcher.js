@@ -1,34 +1,33 @@
+var users = [];
+
 class UserDataFetcher {
     fetch(objects) {
-        this.users = this.transform(objects);
-
-        return this.users;
+        return this.transform(objects);
     }
 
     supports(object) {
         return ('users' === object);
     }
 
-    findByUsername(username) {
-        return this.users.find(user => {
-            return user.login === username
+    findByUsername(email) {
+        return users.find(user => {
+            return user.email === email
         });
     }
 
     transform(objects) {
-        let data = [];
-
         objects.forEach(function (object) {
-            let item = {};
+            let item = [];
+            let values = object.val();
 
-            item.id = object.key;
-            item.login = object.val().login;
-            item.password = object.val().password;
+            item.email = values.email;
+            item.password = values.password;
+            item.roleUser = values.role;
 
-            data.push(item);
+            users.push(values);
         });
 
-        return data;
+        return users;
     }
 }
 

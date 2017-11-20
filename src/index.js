@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-browser-router'
 import './styles/index.css'
 import registerServiceWorker from './registerServiceWorker'
 import LayoutWrapper from './components/Wrappers/LayoutWrapper'
-import * as Server from './server'
 
 ReactDOM.render((
     <BrowserRouter>
@@ -12,5 +11,3 @@ ReactDOM.render((
     </BrowserRouter>
     ), document.getElementById('site-container'));
 registerServiceWorker();
-
-Server.fetchData('users');
