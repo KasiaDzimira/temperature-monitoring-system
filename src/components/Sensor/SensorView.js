@@ -1,24 +1,62 @@
 import React, { Component } from 'react'
 import * as Server from '../../server'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as ProfileActions from '../../actions/profile-actions'
+import PropTypes from 'prop-types'
+import Loader from '../Loader/loader'
+import ReactSelect from "react-select"
 
 class SensorView extends Component {
-    render() {
-        this.userHasSensors();
-
-        return (
-            <section className={'sensor'}>
-                <div className={'not-found'}></div>
-            </section>
-        )
+    componentDidMount() {
+        Server.setOnUpdateCallback((newData) => {
+            this.props.actions.receivedFirebaseData(newData);
+        }, 'sensors')
     }
 
-    userHasSensors() {
-        Server.fetchData('users');
+    getSensors(email, users) {
+        for (var user in users) {
+            if (users[user].email === email) {
+                return users[user].sensors;
+            }
+        }
+    }
 
-        var userFetcher = Server.getFetcher('users');
+    render() {
+        let sensors = this.props.firebaseData;
 
-        var loggedUser = userFetcher.findByUsername(window.localStorage.getItem('loggedUser'));
+        console.log(sensors);
+
+        if (this.props.hasSensor) {
+            return (
+                <section className={'sensor'}>
+                    <div className={'not-found'}>Sensors has been found!</div>
+                </section>
+            )
+        } else {
+            return (
+                <section className={'sensor'}>
+                    <div className={'not-found'}>User has not any sensors!</div>
+                </section>
+            )
+        }
     }
 }
 
-export default SensorView;
+SensorView.propTypes = {
+    actions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+    return {
+        firebaseData: state.profile.firebaseData,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(ProfileActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SensorView);

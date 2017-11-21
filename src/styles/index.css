@@ -4,3 +4,5 @@
 @import "../components/Buttons/buttons.css";
 @import "../components/Inputs/inputs.css";
 @import "../components/Profile/mainPage.css";
+@import "../components/Sensor/sensor.css";
+@import "../components/Loader/loader.css";

@@ -9,7 +9,8 @@ class Register extends Component {
             email: '',
             password: '',
             repeatedPassword: '',
-            userRole: 'ROLE_USER'
+            userRole: 'ROLE_USER',
+            sensors: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -47,7 +48,8 @@ class Register extends Component {
             email: this.state.email,
             password: this.state.password,
             repeatedPassword: this.state.repeatedPassword,
-            userRole: this.state.userRole
+            userRole: this.state.userRole,
+            sensors: this.state.sensors
         };
 
         if (this.isValidPassword(user)) {

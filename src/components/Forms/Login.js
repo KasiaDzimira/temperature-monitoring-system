@@ -37,7 +37,7 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        //
+
         // let ref = 'users';
         // this.checkIfIsAdmin(ref, formData.email);
 
@@ -50,10 +50,10 @@ class Login extends Component {
     }
 
     // checkIfIsAdmin(ref, email) {
-    //     Server.fetchData(ref);
+    //     var promise = Server.fetchData(ref);
     //
-    //     var userFetcher = Server.getFetcher(ref);
-    //     var user = userFetcher.findByUsername(email);
+    //     let userFetcher = Server.getFetcher(ref);
+    //     let user = userFetcher.findByUsername(email);
     //
     //     if (user) {
     //         console.log('is admin');

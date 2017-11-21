@@ -10,6 +10,16 @@ firebase.initializeApp(config);
 
 const auth = firebase.auth();
 
+    export function init() {
+        firebase.initializeApp(config);
+    }
+
+    export function setOnUpdateCallback(callback, ref) {
+        firebase.database().ref(ref).on('value', (data) => {
+            callback(data.val());
+        });
+    }
+
     export function pushData(ref, item) {
         const itemsRef = firebase.database().ref(ref);
 
@@ -18,7 +28,8 @@ const auth = firebase.auth();
 
     export function fetchData(objectName) {
         const itemsRef = firebase.database().ref().child(objectName);
-        itemsRef.on('value', snapshot => { dataFetcher.fetch(objectName, snapshot) });
+
+        itemsRef.on('value', snapshot => { dataFetcher.fetch(objectName, snapshot) } );
     }
 
     export function getFetcher(name) {
@@ -58,7 +69,8 @@ const auth = firebase.auth();
         let data = {
             email: user.email,
             password: user.password,
-            role: user.userRole
+            role: user.userRole,
+            sensors: user.sensors
         };
 
         pushData('users', data);
