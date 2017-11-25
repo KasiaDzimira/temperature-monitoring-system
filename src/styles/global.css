@@ -43,3 +43,13 @@ main {
   align-items: center;
   height: 100%;
 }
+
+.hidden,
+.loader-hidden {
+  display: none;
+}
+
+.visible,
+.loader-active {
+  display: block;
+}

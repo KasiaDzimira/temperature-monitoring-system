@@ -38,9 +38,6 @@ class Login extends Component {
             password: this.state.password
         };
 
-        // let ref = 'users';
-        // this.checkIfIsAdmin(ref, formData.email);
-
         Server.logIn(formData.email, formData.password);
 
         this.setState({
@@ -48,19 +45,6 @@ class Login extends Component {
             password: ''
         });
     }
-
-    // checkIfIsAdmin(ref, email) {
-    //     var promise = Server.fetchData(ref);
-    //
-    //     let userFetcher = Server.getFetcher(ref);
-    //     let user = userFetcher.findByUsername(email);
-    //
-    //     if (user) {
-    //         console.log('is admin');
-    //     } else {
-    //         console.log('isn\'t admin');
-    //     }
-    // }
 }
 
 export default Login;

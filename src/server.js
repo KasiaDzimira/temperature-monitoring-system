@@ -1,23 +1,20 @@
-import React from 'react'
-
 const config = require('./config/firebase.config');
-const DataFetcher = require('./services/data-fetcher');
-
-const dataFetcher = new DataFetcher(config);
 const firebase = require('firebase');
 
 firebase.initializeApp(config);
 
 const auth = firebase.auth();
 
-    export function init() {
-        firebase.initializeApp(config);
-    }
-
     export function setOnUpdateCallback(callback, ref) {
         firebase.database().ref(ref).on('value', (data) => {
             callback(data.val());
         });
+    }
+
+    export function getObjectById(callback, ref, objectId) {
+        firebase.database().ref(ref).child(objectId).on('value', (data) => {
+            callback(data.val().sensors);
+        })
     }
 
     export function pushData(ref, item) {
@@ -26,14 +23,10 @@ const auth = firebase.auth();
         itemsRef.push(item);
     }
 
-    export function fetchData(objectName) {
-        const itemsRef = firebase.database().ref().child(objectName);
+    export function addSensorToUser(sensor, user) {
+        const itemRef = firebase.database().ref('users');
 
-        itemsRef.on('value', snapshot => { dataFetcher.fetch(objectName, snapshot) } );
-    }
-
-    export function getFetcher(name) {
-        return dataFetcher.getFetcherByName(name);
+        itemRef.child(user).child('sensors').child(sensor.value).set(true);
     }
 
     export function createUser(user) {
@@ -52,7 +45,20 @@ const auth = firebase.auth();
         auth.onAuthStateChanged(firebaseUser => {
             if (firebaseUser) {
                 window.localStorage.setItem('loggedUser', firebaseUser.email);
-                window.location = '/profile';
+
+                const users = firebase.database().ref('users');
+
+                users.orderByChild('email').equalTo(firebaseUser.email).once('value', (snapshot) => {
+                    var user = snapshot.val();
+
+                    Object.keys(user).map((key, value) => {
+                        if (user[key].role === 'ROLE_ADMIN') {
+                            window.location = '/admin-profile';
+                        } else {
+                            window.location = '/profile';
+                        }
+                    });
+                });
             }
 
             console.log('Not logged in');

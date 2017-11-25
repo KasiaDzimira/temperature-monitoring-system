@@ -4,5 +4,6 @@
 @import "../components/Buttons/buttons.css";
 @import "../components/Inputs/inputs.css";
 @import "../components/Profile/mainPage.css";
-@import "../components/Sensor/sensor.css";
 @import "../components/Loader/loader.css";
+@import "../../node_modules/react-select/dist/react-select.css";
+@import "../components/Dropdowns/sensor-select.css";
