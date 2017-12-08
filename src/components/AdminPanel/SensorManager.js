@@ -8,18 +8,20 @@ import DeleteIcon from 'react-icons/lib/ti/minus'
 import AddIcon from 'react-icons/lib/ti/plus'
 import EditAction from 'react-icons/lib/ti/edit'
 import { CylinderSpinLoader } from 'react-css-loaders'
-import SensorDropdown from '../Dropdowns/sensor-dropdown'
+import AddSensorForm from '../Forms/AddSensorForm'
 
 var userSensors = {};
-var allSensors = {};
-var selectVisible = false;
 
 class SensorManager extends Component {
-    componentDidMount() {
-        Server.setOnUpdateCallback((newData) => {
-            this.props.actions.receivedFirebaseSensorsData(newData);
-        }, 'sensors');
+    constructor() {
+        super();
 
+        this.state = {
+            addSensorFormVisible: false
+        }
+    }
+
+    componentDidMount() {
         Server.getObjectById((newData) => {
             this.props.actions.receivedFirebaseUserSensorsData(newData);
         }, 'users', this.props.match.params.userId);
@@ -41,9 +43,10 @@ class SensorManager extends Component {
                         <div className={'sensor-id'}>
                             { key }
                         </div>
-                        <div className={'sensor-type'}>Temperature</div>
+                        <div className={'sensor-type'}>{ userSensors[key].type }</div>
+                        <div className={'sensor-place'}>{ userSensors[key].place }</div>
                         <div className={'sensor-actions'}>
-                            <div className={'delete-sensor'} onClick={ this.handleDeleteSensorButton.bind(this) }><DeleteIcon /></div>
+                            <div className={'delete-sensor'} onClick={ this.handleDeleteSensorButton.bind(this, key) }><DeleteIcon /></div>
                             <div className={'edit-sensor'}><EditAction /></div>
                         </div>
                     </div>
@@ -52,28 +55,27 @@ class SensorManager extends Component {
         )
     }
 
-    handleDeleteSensorButton() {
-        console.log('remove me')
+    handleDeleteSensorButton(sensorId) {
+        Server.removeUserSensor(sensorId, this.props.match.params.userId);
     }
 
     handleAddSensorButton() {
-        selectVisible = !selectVisible;
+        this.setState({
+            addSensorFormVisible: !this.state.addSensorFormVisible
+        });
 
         this.forceUpdate();
     }
 
-    selectSensor(val) {
-        selectVisible = false;
-        Server.addSensorToUser(val, this.props.match.params.userId);
+    handleAddSensorFormUnmount() {
+        this.setState({
+            addSensorFormVisible: false
+        })
     }
 
     render() {
         if (this.props.userSensors || this.props.userSensors === 0) {
             userSensors = this.props.userSensors;
-        }
-
-        if(this.props.sensors) {
-            allSensors = this.props.sensors
         }
 
         if (userSensors || userSensors === 0) {
@@ -84,6 +86,7 @@ class SensorManager extends Component {
                         <div className={'list-header'}>
                             <div className={'sensor-id'}>Sensor id</div>
                             <div className={'sensor-type'}>Type</div>
+                            <div className={'sensor-type'}>Place</div>
                             <div className={'sensor-actions__label'}>Actions</div>
                         </div>
                         { this.renderListOfSensors() }
@@ -91,7 +94,7 @@ class SensorManager extends Component {
                     <div className={'add-sensor'} onClick={ this.handleAddSensorButton.bind(this) }>
                         Add sensor <AddIcon />
                     </div>
-                    <SensorDropdown className={selectVisible ? 'sensor-select visible' : 'sensor-select hidden'} sensors={allSensors} callback={ this.selectSensor.bind(this) }/>
+                    { this.state.addSensorFormVisible ? <AddSensorForm userId={ this.props.match.params.userId } unmount={ this.handleAddSensorFormUnmount.bind(this) }/> : null }
                 </section>
             )
         } else {
@@ -107,7 +110,6 @@ SensorManager.propTypes = {
 function mapStateToProps(state) {
     return {
         userSensors: state.profile.userSensors,
-        sensors: state.profile.sensors
     }
 }
 

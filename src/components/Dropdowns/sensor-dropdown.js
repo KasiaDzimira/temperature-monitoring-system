@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 
-const SensorDropdown = ({ className, sensors, callback }) => {
+const SensorDropdown = ({ sensors, selectedValue, callback }) => {
     let items = [];
 
     for (var sensor in sensors) {
@@ -14,7 +14,8 @@ const SensorDropdown = ({ className, sensors, callback }) => {
             <Select
                 name={'sensor-form'}
                 options={items}
-                className={ className }
+                value={ selectedValue }
+                className={ 'sensor-select' }
                 placeholder={'Select sensor'}
                 onChange={(e) => callback(e)}
             />

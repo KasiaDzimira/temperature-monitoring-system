@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 let users = {};
 
-class AdminProfile extends Component {
+class UserSensorsView extends Component {
     componentDidMount() {
         Server.setOnUpdateCallback((newData) => {
             this.props.actions.receivedFirebaseUsersData(newData);
@@ -25,7 +25,7 @@ class AdminProfile extends Component {
                 </div>
                 { Object.keys(users).map(key => {
                     return (
-                        <Link to={`/sensor-manager/${key}`}>
+                        <Link to={`/admin-profile/sensor-manager/${key}`}>
                             <div className={'list-item'}>
                                 <div className={'user-email'}>
                                     { users[key].email }
@@ -58,18 +58,14 @@ class AdminProfile extends Component {
 
         return (
             <section className={'profile'}>
-                <div className={'login'}>You are logged as { window.localStorage.getItem('loggedUser') }</div>
                 <div className={'users-list'}>List of users:</div>
                 { this.renderListOfUsers() }
-                <div className={'log-out'}>
-                    <button className={'log-out__btn'} onClick={ this.logOutUser }>Log out</button>
-                </div>
             </section>
         )
     }
 }
 
-AdminProfile.propTypes = {
+UserSensorsView.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
@@ -85,4 +81,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserSensorsView);

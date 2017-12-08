@@ -1,24 +1,49 @@
-.sensor-manager,
 .profile {
     text-align: center;
     color: #222831;
+    width: 1210px;
+    margin-top: 50px;
 }
 
-.profile .log-out button {
-    background-color: #f96d00;
+.profile .charts {
+    display: inline-block;
+    margin: 0 auto;
+    width: 650px;
+}
+
+.profile .charts .single-chart {
+    margin: 50px auto;
+    width: 610px;
+}
+
+.profile .charts .chart-place {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.profile .date-picker div {
+    height: auto;
+}
+
+.profile .date-picker input {
+    width: 100px;
+    height: 30px;
+    text-align: center;
 }
 
 .profile .login {
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
 }
 
-.sensor-manager .users-list,
+.profile .log-out__section {
+    width: 1210px;
+}
+
 .profile .users-list {
     margin-bottom: 20px;
 }
 
-.sensor-manager .list,
 .profile .list {
     overflow: auto;
     max-height: 400px;
@@ -26,8 +51,6 @@
     min-height: 115px;
 }
 
-.sensor-manager .list .list-header,
-.sensor-manager .list .list-item,
 .profile .list .list-header,
 .profile .list .list-item {
     display: flex;
@@ -37,7 +60,6 @@
     border-bottom: 1px solid #222831;
 }
 
-.sensor-manager .list .list-item:hover,
 .profile .list .list-item:hover {
     background-color: #f2f2f2;
     cursor: pointer;
@@ -52,57 +74,23 @@
     padding-left: 15px;
 }
 
-.sensor-manager .list .list-header div,
 .profile .list .list-header div {
     font-weight: bold;
 }
 
-.sensor-manager .list .list-header div,
-.sensor-manager .list .list-item div {
-    width: calc(100% / 3);
-    float: left;
-    align-items: center;
-    display: flex;
-    padding-left: 15px;
+.profile.user-management__section .list .list-header div,
+.profile.user-management__section .list .list-item div {
+    width: calc(100% / 2);
 }
 
-.sensor-manager .sensor-actions svg {
-    font-size: 30px;
-    margin-right: 10px;
-}
-
-.sensor-manager .sensor-actions svg:hover {
-    transform: scale(1.3);
-    cursor: pointer;
-}
-
-.sensor-manager .empty-list-item div {
-    margin-top: 15px;
-}
-
-.sensor-manager .empty-list-item .empty-item {
-    color: red;
-}
-
-.sensor-manager .add-sensor {
-    font-size: 20px;
-    font-weight: bold;
-    border: 2px solid #222831;
-    width: 200px;
-    margin: 0 auto;
-}
-
-.sensor-manager .add-sensor:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-.sensor-manager .add-sensor svg {
-    font-size: 30px;
-}
-
-.sensor-manager .sensor-actions .delete-sensor,
-.sensor-manager .sensor-actions .edit-sensor {
+.profile.user-management__section .actions .delete-user,
+.profile.user-management__section .actions .edit-user {
     width: 50px !important;
     padding-left: 0 !important;
+    font-size: 30px;
+}
+
+.profile.user-management__section .actions svg:hover {
+    transform: scale(1.3);
+    cursor: pointer;
 }

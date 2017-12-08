@@ -7,3 +7,11 @@
 @import "../components/Loader/loader.css";
 @import "../../node_modules/react-select/dist/react-select.css";
 @import "../components/Dropdowns/sensor-select.css";
+@import "../components/Forms/addSensorForm.css";
+@import "../components/StaticPages/about.css";
+@import "../components/AdminPanel/sensor-manager.css";
+@import "../components/Header/menu.css";
+@import "../components/AdminPanel/user-manager.css";
+@import "../components/Forms/addUserForm.css";
+@import "~react-datepicker/dist/react-datepicker.css";
+@import "../../node_modules/react-datepicker/dist/react-datepicker-cssmodules.css";

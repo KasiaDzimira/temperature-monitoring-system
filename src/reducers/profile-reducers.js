@@ -1,3 +1,6 @@
+import moment from 'moment'
+var dateFormat = require('dateformat');
+
 function profileReducer(state = {}, action = {}) {
     switch (action.type) {
         case 'FIREBASE_USERS_DATA_RECEIVED':
@@ -15,6 +18,28 @@ function profileReducer(state = {}, action = {}) {
 
             return {
                 userSensors: action.userSensors
+            };
+        case 'CHART_SENSORS_DATA_RECEIVED':
+            let items = [];
+
+            Object.keys(action.sensors).map(key => {
+                var sensorData = action.sensors[key];
+                var preparedData = [];
+
+                Object.keys(sensorData).map(key => {
+                    var date = new Date(parseInt(key, 10));
+                    if (moment(dateFormat(date, 'yyyy-mm-dd')).isSame(dateFormat(action.startDate.toISOString(), 'yyyy-mm-dd'))) {
+                        preparedData.push({name: dateFormat(date, 'HH:MM'), temperature: sensorData[key].value});
+                    }
+                });
+
+                items.push({sensorId: key, temperatures: preparedData});
+            });
+
+            console.log(items);
+
+            return {
+                sensors: items
             };
         default:
             return state;

@@ -13,7 +13,21 @@ const auth = firebase.auth();
 
     export function getObjectById(callback, ref, objectId) {
         firebase.database().ref(ref).child(objectId).on('value', (data) => {
-            callback(data.val().sensors);
+            callback(data.val());
+        })
+    }
+
+    export function getUserSensorsData(callback, sensorIds) {
+        firebase.database().ref('sensors').on('value', data => {
+            var values = [];
+
+            Object.keys(sensorIds).map(key => {
+                firebase.database().ref('sensors').child(key).on('value', data => {
+                    values[key] = data.val()
+                })
+            });
+
+            callback(values);
         })
     }
 
@@ -23,14 +37,22 @@ const auth = firebase.auth();
         itemsRef.push(item);
     }
 
-    export function addSensorToUser(sensor, user) {
+    export function addSensorToUser(sensorId, sensorData, user) {
         const itemRef = firebase.database().ref('users');
 
-        itemRef.child(user).child('sensors').child(sensor.value).set(true);
+        itemRef.child(user).child('sensors').child(sensorId).set(sensorData);
+    }
+
+    export function removeUserSensor(sensorId, userId) {
+        firebase.database().ref('users').child(userId).child('sensors').child(sensorId).remove();
+    }
+
+    export function removeUser(userId) {
+        firebase.database().ref('users').child(userId).remove();
     }
 
     export function createUser(user) {
-        const promise = auth.createUserWithEmailAndPassword(user.email, user.password);
+        const promise = auth.createUserWithEmailAndPassword(user.email.toLowerCase(), user.password);
 
         promise
             .catch(e => console.log(e.message))
@@ -38,7 +60,7 @@ const auth = firebase.auth();
     }
 
     export function logIn(email, password) {
-        const promise = auth.signInWithEmailAndPassword(email, password);
+        const promise = auth.signInWithEmailAndPassword(email.toLowerCase(), password);
 
         promise.catch(e => console.log(e.message));
 
@@ -55,7 +77,7 @@ const auth = firebase.auth();
                         if (user[key].role === 'ROLE_ADMIN') {
                             window.location = '/admin-profile';
                         } else {
-                            window.location = '/profile';
+                            window.location = '/profile/' + key;
                         }
                     });
                 });
@@ -73,7 +95,7 @@ const auth = firebase.auth();
 
     function pushUserData(user) {
         let data = {
-            email: user.email,
+            email: user.email.toLowerCase(),
             password: user.password,
             role: user.userRole,
             sensors: user.sensors

@@ -6,3 +6,12 @@ button {
     display: block;
     margin: 0 auto 15px;
 }
+
+.log-out button {
+    background-color: #f96d00;
+}
+
+.log-out button:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+}

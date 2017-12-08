@@ -1,4 +1,5 @@
+.sensor-types__select,
 .sensor-select {
     width: 300px;
-    margin: 15px auto 50px;
+    margin: 30px auto 10px;
 }

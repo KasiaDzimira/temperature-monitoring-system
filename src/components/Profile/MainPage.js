@@ -4,57 +4,73 @@ import * as Server from '../../server'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ProfileActions from '../../actions/profile-actions'
-import SensorDropdown from '../Dropdowns/sensor-dropdown'
 import { CylinderSpinLoader } from 'react-css-loaders'
+import LogoutButton from '../Buttons/LogoutButton'
+import SimpleLineChart from '../Charts/SimpleLineChart'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 
-var sensors = undefined;
+var userSensors = {};
 
 class MainPage extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            startDate: moment()
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
     componentDidMount() {
-        Server.setOnUpdateCallback((newData) => {
-            this.props.actions.receivedFirebaseUsersData(newData);
-        }, 'users');
-
-        Server.setOnUpdateCallback((newData) => {
-            this.props.actions.receivedFirebaseSensorsData(newData);
-        }, 'sensors');
+        Server.getObjectById((newData) => {
+            this.props.actions.receivedFirebaseUserSensorsData(newData);
+        }, 'users', this.props.match.params.userId);
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.sensors !== this.props.sensors && prevProps.sensors) {
-            sensors = prevProps.sensors;
-        }
-    }
-
-    selectSensor(val) {
-        Server.addSensorToUser(val, window.localStorage.getItem('loggedUser'));
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
     }
 
     render() {
-        if (!this.props.sensors && !sensors) {
-            return <CylinderSpinLoader />
+        if (this.props.userSensors) {
+            userSensors = this.props.userSensors;
         }
 
-        if (this.props.sensors) {
-            sensors = this.props.sensors;
+        if (!userSensors || Object.keys(userSensors).length === 0) {
+            return (
+                <section className={'profile'}>
+                    <div className={'login'}>You are logged as { window.localStorage.getItem('loggedUser') }</div>
+                    <div className={'select-sensor__info'}>You don't have any registered sensors.</div>
+                    <LogoutButton />
+                </section>
+            )
+        }
+
+        if (!this.props.userSensors && this.props.userSensors !== 0 && !userSensors) {
+            return <CylinderSpinLoader />
         }
 
         return (
             <section className={'profile'}>
-                <div className={'login'}>You are logged as { window.localStorage.getItem('loggedUser') }</div>
-                <div className={'select-sensor__info'}>Select your first sensor:</div>
-                <SensorDropdown sensors={sensors} callback={ this.selectSensor.bind(this) }/>
-                <div className={'log-out'}>
-                    <button className={'log-out__btn'} onClick={ this.logOutUser }>Log out</button>
+                <LogoutButton />
+                <div className={'date-picker'}>
+                    <div className={'date-picker__info'}>
+                        Select date:
+                    </div>
+                    <DatePicker
+                        selected={this.state.startDate}
+                        onChange={this.handleChange}
+                        dateFormat={'YYYY-MM-DD'}
+                    />
+                </div>
+                <div className={'charts'}>
+                <SimpleLineChart userSensors={userSensors} date={this.state.startDate}/>
                 </div>
             </section>
-        )
-    }
-
-    logOutUser(e) {
-        e.preventDefault();
-
-        Server.logOut();
+        );
     }
 }
 
@@ -64,8 +80,7 @@ MainPage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        users: state.profile.users,
-        sensors: state.profile.sensors
+        userSensors: state.profile.userSensors,
     }
 }
 

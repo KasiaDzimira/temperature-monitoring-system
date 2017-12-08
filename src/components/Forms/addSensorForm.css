@@ -1,0 +1,12 @@
+.add-sensor__form button {
+    background-color: #f96d00;
+}
+
+.add-sensor__form button:hover {
+    transform: scale(1.05);
+}
+
+.add-sensor__form .place-input {
+    width: 285px;
+    height: 25px;
+}
