@@ -3,20 +3,17 @@ import * as Server from '../../server'
 import Select from 'react-select'
 import { Link } from 'react-router-dom';
 
-class AddSensorForm extends Component {
+class EditSensorForm extends Component {
     constructor() {
         super();
 
         this.handleUserRole = this.handleUserRole.bind(this);
-        this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
 
         this.state = {
             userRole: '',
-            email: '',
-            phone: '',
-            password: ''
+            phone: ''
         }
     }
 
@@ -41,7 +38,7 @@ class AddSensorForm extends Component {
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     handleUserRole(data) {
@@ -50,30 +47,14 @@ class AddSensorForm extends Component {
         })
     }
 
-    handlePasswordChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
-
     handleFormSubmit(e) {
         e.preventDefault();
 
-        const user = {
-            email: this.state.email,
-            phone: this.state.phone,
-            password: this.state.password,
-            userRole: this.state.userRole,
-            sensors: null
-        };
-
-        Server.createUser(user);
+        Server.updateUser(this.props.userId, {role: this.state.userRole ? this.state.userRole : this.props.role, phone: this.state.phone ? this.state.phone : this.props.phone});
 
         this.setState({
-            email: '',
-            phone: '',
-            password: '',
-            userRole: ''
+            userRole: '',
+            phone: ''
         });
 
         this.props.unmount();
@@ -82,14 +63,12 @@ class AddSensorForm extends Component {
     render() {
         return (
             <form className={'add-user__form'} onSubmit={ this.handleFormSubmit }>
-                <input className={'email-input'} type={'text'} name={'email'} placeholder={'E-mail'} onChange={ this.handleChange } value={ this.state.email } />
-                <input className={'phone-input'} type={'text'} name={'phone'} placeholder={'Phone'} onChange={ this.handleChange } value={ this.state.phone } />
-                <input className={'password-input'} type={'password'} name={'password'} placeholder={'Password'} onChange={ this.handlePasswordChange } value={ this.state.password } />
-                { this.renderUserRolesSelect(this.state.userRole) }
+                { this.renderUserRolesSelect(this.state.userRole ? this.state.userRole : this.props.role) }
+                <input type={'text'} name={'phone'} placeholder={'Phone'} onChange={ this.handleChange } value={ this.state.phone ? this.state.phone : this.props.phone } />
                 <button className={'btn__confirm'}><Link to={'/admin-profile/users-manager'}>Confirm</Link></button>
             </form>
         )
     }
 }
 
-export default AddSensorForm;
+export default EditSensorForm;

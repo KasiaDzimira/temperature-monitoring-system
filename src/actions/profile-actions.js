@@ -1,8 +1,8 @@
-export function receivedFirebaseUsersData(users) {
+export function receivedFirebaseData(data) {
     return (dispatch) => {
         dispatch({
-            type: 'FIREBASE_USERS_DATA_RECEIVED',
-            users: users
+            type: 'FIREBASE_DATA_RECEIVED',
+            data: data
         });
     };
 }

@@ -12,7 +12,7 @@ let users = {};
 class UserSensorsView extends Component {
     componentDidMount() {
         Server.setOnUpdateCallback((newData) => {
-            this.props.actions.receivedFirebaseUsersData(newData);
+            this.props.actions.receivedFirebaseData(newData);
         }, 'users');
     }
 
@@ -50,11 +50,11 @@ class UserSensorsView extends Component {
     }
 
     render() {
-        if (!this.props.users) {
+        if (!this.props.data) {
             return <CylinderSpinLoader />
         }
 
-        users = this.props.users;
+        users = this.props.data;
 
         return (
             <section className={'profile'}>
@@ -71,7 +71,7 @@ UserSensorsView.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        users: state.profile.users
+        data: state.profile.data
     }
 }
 

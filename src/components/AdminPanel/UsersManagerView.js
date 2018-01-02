@@ -9,6 +9,7 @@ import DeleteIcon from 'react-icons/lib/ti/minus'
 import AddIcon from 'react-icons/lib/ti/plus'
 import EditIcon from 'react-icons/lib/ti/edit'
 import AddUserForm from '../Forms/AddUserForm'
+import EditUserForm from '../Forms/EditUserForm'
 
 let users = {};
 
@@ -17,13 +18,15 @@ class UsersManagementView extends Component {
         super();
 
         this.state = {
-            addUserFormVisible: false
+            addUserFormVisible: false,
+            editUserFormVisible: false,
+            userId: ''
         }
     }
 
     componentDidMount() {
         Server.setOnUpdateCallback((newData) => {
-            this.props.actions.receivedFirebaseUsersData(newData);
+            this.props.actions.receivedFirebaseData(newData);
         }, 'users');
     }
 
@@ -32,6 +35,8 @@ class UsersManagementView extends Component {
             <div className={'list'}>
                 <div className={'list-header'}>
                     <div className={'email-label'}>User e-mail</div>
+                    <div className={'role-label'}>Role</div>
+                    <div className={'phone-label'}>Phone</div>
                     <div className={'actions'}>Actions</div>
                 </div>
                 { Object.keys(users).map(key => {
@@ -40,9 +45,15 @@ class UsersManagementView extends Component {
                             <div className={'user-email'}>
                                 { users[key].email }
                             </div>
+                            <div className={'user-role'}>
+                                { users[key].role }
+                            </div>
+                            <div className={'user-phone'}>
+                                { users[key].phone }
+                            </div>
                             <div className={'actions'}>
                                 <div className={'delete-user'} onClick={ this.handleDeleteUserBtnClick.bind(this, key) }><DeleteIcon /></div>
-                                <div className={'edit-user'}><EditIcon /></div>
+                                <div className={'edit-user'} onClick={ this.handleEditUserBtnClick.bind(this, key) }><EditIcon /></div>
                             </div>
                         </div>
                     )
@@ -52,7 +63,16 @@ class UsersManagementView extends Component {
     }
 
     handleDeleteUserBtnClick(userId) {
-        Server.removeUser(userId);
+        Server.remove('users', userId);
+    }
+
+    handleEditUserBtnClick(userId) {
+        this.setState({
+            editUserFormVisible: !this.state.editUserFormVisible,
+            userId: userId
+        });
+
+        this.forceUpdate();
     }
 
     handleAddUserBtnClick() {
@@ -69,12 +89,18 @@ class UsersManagementView extends Component {
         })
     }
 
+    handleEditUserFormUnmount() {
+        this.setState({
+            editUserFormVisible: false
+        })
+    }
+
     render() {
-        if (!this.props.users) {
+        if (!this.props.data) {
             return <CylinderSpinLoader />
         }
 
-        users = this.props.users;
+        users = this.props.data;
 
         return (
             <section className={'profile user-management__section'}>
@@ -84,6 +110,14 @@ class UsersManagementView extends Component {
                         Add user <AddIcon />
                     </div>
                     { this.state.addUserFormVisible ? <AddUserForm unmount={ this.handleAddUserFormUnmount.bind(this) }/> : null }
+                    { this.state.editUserFormVisible ?
+                        <EditUserForm
+                            userId={ this.state.userId }
+                            role={ users[this.state.userId].role }
+                            phone={ users[this.state.userId].phone }
+                            unmount={ this.handleEditUserFormUnmount.bind(this) }
+                        /> : null
+                    }
                 </div>
             </section>
         )
@@ -96,7 +130,7 @@ UsersManagementView.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        users: state.profile.users
+        data: state.profile.data
     }
 }
 

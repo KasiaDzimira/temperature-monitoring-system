@@ -54,7 +54,7 @@ class Menu extends Component {
                         <span><Link to={'/admin-profile/user-sensors'}>User sensors</Link></span>
                     </div>
                     <div className={'alerts ' + this.state.alerts} onClick={ this.handleAlerts }>
-                        <span>Alerts</span>
+                        <span><Link to={'/admin-profile/alerts-manager'}>Alerts</Link></span>
                     </div>
                     <div className={'users-management ' + this.state.usersManagement} onClick={ this.handleUsersManagement }>
                         <span><Link to={'/admin-profile/users-manager'}>Users management</Link></span>

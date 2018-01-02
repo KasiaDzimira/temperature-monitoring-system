@@ -1,0 +1,16 @@
+.contact-page {
+    text-align: center;
+    color: #393e46;
+}
+
+.contact-page h1 {
+    margin: 50px auto;
+}
+
+.contact-page .email-input {
+    width: 350px;
+}
+
+.contact-page button {
+    margin-top: 50px;
+}

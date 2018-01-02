@@ -15,3 +15,6 @@
 @import "../components/Forms/addUserForm.css";
 @import "~react-datepicker/dist/react-datepicker.css";
 @import "../../node_modules/react-datepicker/dist/react-datepicker-cssmodules.css";
+@import "../components/StaticPages/contact.css";
+@import "../components/AdminPanel/alerts-manager.css";
+@import "../components/Forms/addAlertForm.css";

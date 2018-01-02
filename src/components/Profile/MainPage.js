@@ -7,31 +7,14 @@ import * as ProfileActions from '../../actions/profile-actions'
 import { CylinderSpinLoader } from 'react-css-loaders'
 import LogoutButton from '../Buttons/LogoutButton'
 import SimpleLineChart from '../Charts/SimpleLineChart'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 
 var userSensors = {};
 
 class MainPage extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            startDate: moment()
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-    }
     componentDidMount() {
         Server.getObjectById((newData) => {
             this.props.actions.receivedFirebaseUserSensorsData(newData);
         }, 'users', this.props.match.params.userId);
-    }
-
-    handleChange(date) {
-        this.setState({
-            startDate: date
-        });
     }
 
     render() {
@@ -56,18 +39,8 @@ class MainPage extends Component {
         return (
             <section className={'profile'}>
                 <LogoutButton />
-                <div className={'date-picker'}>
-                    <div className={'date-picker__info'}>
-                        Select date:
-                    </div>
-                    <DatePicker
-                        selected={this.state.startDate}
-                        onChange={this.handleChange}
-                        dateFormat={'YYYY-MM-DD'}
-                    />
-                </div>
                 <div className={'charts'}>
-                <SimpleLineChart userSensors={userSensors} date={this.state.startDate}/>
+                <SimpleLineChart userSensors={userSensors} />
                 </div>
             </section>
         );
@@ -80,7 +53,7 @@ MainPage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        userSensors: state.profile.userSensors,
+        userSensors: state.profile.userSensors
     }
 }
 

@@ -1,0 +1,15 @@
+.alert-types__select {
+    width: 360px;
+    margin: 10px auto;
+}
+
+.edit-alert__form,
+.alert-message__label,
+.add-alert__form {
+    margin-top: 20px;
+}
+
+.content-input {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}

@@ -13,7 +13,7 @@ class HomePage extends Component {
                         <span>Log in to your user panel:</span>
                     </div>
                     <Login />
-                    <div className={'register-user'}>
+                    <div className={'register-user__btn'}>
                         <span>or create your account</span>
                         <Link to={'/register'}>
                             <button className={'register-button'}>Sign up</button>

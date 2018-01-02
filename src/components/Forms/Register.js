@@ -7,6 +7,7 @@ class Register extends Component {
 
         this.state = {
             email: '',
+            phone: '',
             password: '',
             repeatedPassword: '',
             userRole: 'ROLE_USER',
@@ -26,6 +27,7 @@ class Register extends Component {
                 <div className={'register-form'}>
                     <form className={'register-user__form'} onSubmit={this.handleSubmit}>
                         <input type={'text'} name={'email'} placeholder={'Email'} onChange={ this.handleChange } value={ this.state.email } />
+                        <input type={'text'} name={'phone'} placeholder={'Phone'} onChange={ this.handleChange } value={ this.state.phone } />
                         <input type={'password'} name={'password'} placeholder={'Password'} onChange={ this.handleChange } value={ this.state.password } />
                         <input type={'password'} name={'repeatedPassword'} placeholder={'Repeat password'} onChange={ this.handleChange } value={ this.state.repeatedPassword } />
                         <button className={'btn__create-account'}>Create account</button>
@@ -46,6 +48,7 @@ class Register extends Component {
 
         const user = {
             email: this.state.email,
+            phone: this.state.phone,
             password: this.state.password,
             repeatedPassword: this.state.repeatedPassword,
             userRole: this.state.userRole,
@@ -58,6 +61,7 @@ class Register extends Component {
 
         this.setState({
             email: '',
+            phone: '',
             password: '',
             repeatedPassword: ''
         });

@@ -3,6 +3,8 @@ const firebase = require('firebase');
 
 firebase.initializeApp(config);
 
+var messages = [];
+
 const auth = firebase.auth();
 
     export function setOnUpdateCallback(callback, ref) {
@@ -47,8 +49,8 @@ const auth = firebase.auth();
         firebase.database().ref('users').child(userId).child('sensors').child(sensorId).remove();
     }
 
-    export function removeUser(userId) {
-        firebase.database().ref('users').child(userId).remove();
+    export function remove(ref, objectId) {
+        firebase.database().ref(ref).child(objectId).remove();
     }
 
     export function createUser(user) {
@@ -57,6 +59,14 @@ const auth = firebase.auth();
         promise
             .catch(e => console.log(e.message))
             .then(pushUserData(user));
+    }
+
+    export function updateUser(userId, data) {
+        firebase.database().ref('users').child(userId).update(data);
+    }
+
+    export function updateAlert(alertId, data) {
+        firebase.database().ref('alerts').child(alertId).update(data);
     }
 
     export function logIn(email, password) {
@@ -96,6 +106,7 @@ const auth = firebase.auth();
     function pushUserData(user) {
         let data = {
             email: user.email.toLowerCase(),
+            phone: user.phone,
             password: user.password,
             role: user.userRole,
             sensors: user.sensors

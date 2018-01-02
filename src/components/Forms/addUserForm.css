@@ -13,6 +13,7 @@
     cursor: pointer;
 }
 
+.add-user__form .phone-input,
 .add-user__form .password-input,
 .add-user__form .email-input {
     width: 285px;

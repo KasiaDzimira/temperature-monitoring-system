@@ -2,3 +2,7 @@
     text-align: center;
     color: #393e46;
 }
+
+.about-page h1 {
+    margin: 50px auto;
+}

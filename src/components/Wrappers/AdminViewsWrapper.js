@@ -6,8 +6,8 @@ import LogoutButton from '../Buttons/LogoutButton'
 const AdminViewsWrapper = () => (
     <div className={'admin-panel'}>
         <Menu />
-        <MainAdmin />
         <LogoutButton />
+        <MainAdmin />
     </div>
 );
 

@@ -1,5 +1,5 @@
 .home-page {
-    margin: 0 auto;
+    margin: 50px auto 0;
     width: 320px;
 }
 
@@ -24,17 +24,17 @@
     margin-bottom: 30px;
 }
 
-.home-page .register-user {
+.home-page .register-user__btn {
     display: inline-block;
     width: 100%;
     text-align: center;
 }
 
-.home-page .register-user span {
+.home-page .register-user__btn span {
     width: 100%;
     color: #393e46;
 }
 
-.home-page .register-user a {
+.home-page .register-user__btn a {
     display: inherit;
 }

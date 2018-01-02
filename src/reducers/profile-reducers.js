@@ -3,9 +3,9 @@ var dateFormat = require('dateformat');
 
 function profileReducer(state = {}, action = {}) {
     switch (action.type) {
-        case 'FIREBASE_USERS_DATA_RECEIVED':
+        case 'FIREBASE_DATA_RECEIVED':
             return {
-                users: action.users
+                data: action.data
             };
         case 'FIREBASE_SENSORS_DATA_RECEIVED':
             return {
@@ -35,8 +35,6 @@ function profileReducer(state = {}, action = {}) {
 
                 items.push({sensorId: key, temperatures: preparedData});
             });
-
-            console.log(items);
 
             return {
                 sensors: items
