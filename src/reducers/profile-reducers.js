@@ -23,14 +23,12 @@ function profileReducer(state = {}, action = {}) {
             let items = [];
 
             Object.keys(action.sensors).map(key => {
-                var sensorData = action.sensors[key];
-                var preparedData = [];
+                let sensorData = action.sensors[key];
+                let preparedData = [];
 
                 Object.keys(sensorData).map(key => {
-                    var date = new Date(parseInt(key, 10));
-                    if (moment(dateFormat(date, 'yyyy-mm-dd')).isSame(dateFormat(action.startDate.toISOString(), 'yyyy-mm-dd'))) {
-                        preparedData.push({name: dateFormat(date, 'HH:MM'), temperature: sensorData[key].value});
-                    }
+                    let date = new Date(parseInt(key, 10));
+                    preparedData.push({name: dateFormat(date, 'HH:MM'), temperature: sensorData[key].value});
                 });
 
                 items.push({sensorId: key, temperatures: preparedData});

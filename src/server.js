@@ -1,9 +1,10 @@
+import moment from 'moment'
+import axios from 'axios'
+
 const config = require('./config/firebase.config');
 const firebase = require('firebase');
 
 firebase.initializeApp(config);
-
-var messages = [];
 
 const auth = firebase.auth();
 
@@ -12,22 +13,38 @@ const auth = firebase.auth();
             callback(data.val());
         });
     }
+    
+    export function getAllSensorsData() {
+        firebase.database().ref('sensors').on('value', (data) => {
+            var count = 0;
+
+            Object.keys(data.val()).map(key => {
+                count += Object.keys(data.val()[key]).length;
+            });
+
+            console.log(count, 'All');
+        });
+    }
 
     export function getObjectById(callback, ref, objectId) {
         firebase.database().ref(ref).child(objectId).on('value', (data) => {
             callback(data.val());
-        })
+        });
     }
 
     export function getUserSensorsData(callback, sensorIds) {
+        console.log('start');
+
         firebase.database().ref('sensors').on('value', data => {
             var values = [];
 
             Object.keys(sensorIds).map(key => {
-                firebase.database().ref('sensors').child(key).on('value', data => {
+                firebase.database().ref('sensors').child(key).orderByKey().startAt(moment('2017-12-09').startOf('day').valueOf().toString()).endAt(moment('2017-12-09').endOf('day').valueOf().toString()).on('value', data => {
                     values[key] = data.val()
                 })
             });
+
+            console.log(values);
 
             callback(values);
         })

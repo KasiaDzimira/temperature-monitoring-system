@@ -7,20 +7,43 @@ import * as ProfileActions from '../../actions/profile-actions'
 import { CylinderSpinLoader } from 'react-css-loaders'
 import LogoutButton from '../Buttons/LogoutButton'
 import SimpleLineChart from '../Charts/SimpleLineChart'
+import Pagination from "react-js-pagination"
+require("bootstrap/dist/css/bootstrap-theme.css");
+require("bootstrap/dist/css/bootstrap.css");
 
 var userSensors = {};
 
 class MainPage extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            activePage: 1
+        }
+
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
     componentDidMount() {
         Server.getObjectById((newData) => {
             this.props.actions.receivedFirebaseUserSensorsData(newData);
         }, 'users', this.props.match.params.userId);
+
+        // Server.getAllSensorsData((newData) => {
+        //     this.props.actions.receivedFirebaseSensorsData(newData);
+        // });
+    }
+
+    handlePageChange(pageNumber) {
+        this.setState({activePage: pageNumber});
     }
 
     render() {
         if (this.props.userSensors) {
             userSensors = this.props.userSensors;
         }
+
+        // Server.getAllSensorsData();
 
         if (!userSensors || Object.keys(userSensors).length === 0) {
             return (
@@ -42,6 +65,15 @@ class MainPage extends Component {
                 <div className={'charts'}>
                 <SimpleLineChart userSensors={userSensors} />
                 </div>
+                <div>
+                    <Pagination
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={30}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange}
+                    />
+                </div>
             </section>
         );
     }
@@ -53,7 +85,8 @@ MainPage.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        userSensors: state.profile.userSensors
+        userSensors: state.profile.userSensors,
+        // sensors: state.profile.sensors
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-browser-router'
-import './styles/index.css'
+import './styles/index.scss'
 import registerServiceWorker from './registerServiceWorker'
 import LayoutWrapper from './components/Wrappers/LayoutWrapper'
 import configureStore from './configure-store'

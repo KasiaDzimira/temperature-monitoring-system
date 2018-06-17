@@ -9,12 +9,14 @@ import { CylinderSpinLoader } from 'react-css-loaders'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 
+let count = 0;
+
 class SimpleLineChart extends PureComponent {
     constructor() {
         super();
 
         this.state = {
-            startDate: moment()
+            startDate: moment('2017-12-09')
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,6 +42,8 @@ class SimpleLineChart extends PureComponent {
                 place = this.props.userSensors[key].place
             }
         });
+
+        count += sensorData.temperatures.length;
 
         if (sensorData.temperatures.length > 0) {
             return (
